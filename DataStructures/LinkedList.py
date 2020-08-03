@@ -48,9 +48,35 @@ class SLinkedList:
             newNode = Node(data)
             # adding new node to the end of the list
             currentNode.nextval = newNode
-
-
-
+    def insertAfterKthPosition(self, data, k):
+        if self.headval == None:
+            self.insertAtBeginning(data)
+        else:
+            # check if there are K nodes and traverse to the Kth node
+            currentNode = self.headval
+            count = 1
+            # check if currentNode is null
+            while currentNode != None and count < k:
+                # increment count
+                count += 1
+                # go to the next node in the list
+                currentNode = currentNode.nextval
+            # check if loop terminated due to count or
+            # because K nodes aren't present
+            # print("current node value is: ", currentNode.dataval)
+            if count == k:
+                # currentNode is pointing to the Kth node
+                # make new node and add it to Kth node
+                newNode = Node(data)
+                # storing the node links in a temporary node
+                tempNode = currentNode.nextval
+                # setting the Kth node to point to the new node
+                currentNode.nextval = newNode
+                # setting new node to point to the node links
+                newNode.nextval = tempNode
+            elif currentNode == None:
+                print("K nodes not present in the list. Appending to the end of the list")
+                self.insertAtEnd(data)
 
 if __name__=="__main__":
     list1 = SLinkedList()
@@ -65,6 +91,11 @@ if __name__=="__main__":
     list1.listprint()
     num = input("Enter num\n")
     list1.insertAtEnd(num)
+    list1.listprint()
+
+    num = int(input("Enter num\n"))
+    k = int(input("Enter k value: \n"))
+    list1.insertAfterKthPosition(num, k)
     list1.listprint()
 
     # print(" enter num of entries: \n")
