@@ -11,6 +11,9 @@ class SLinkedList:
 
     def listprint(self):
         printval = self.headval
+        if(printval == None):
+            print("List is empty \n")
+            return
         while printval is not None:
             print (printval.dataval, end="->")
             printval = printval.nextval
@@ -126,6 +129,52 @@ class SLinkedList:
                 del(lastNode)
 
 
+    def deleteKthNode(self, k):
+        # to do this we first need to check if there are k nodes
+        # we try to traverse to the kth node
+        count = 0
+        currentNode = self.headval
+        # check if list is already empty
+        if currentNode == None:
+            print("List is empty \n")
+            return
+        prev2Node = None
+        prevNode = None
+        # looping through
+        while currentNode != None and count < k:
+            count += 1
+            # prev2Node will hold the (K-1)th node
+            prev2Node = prevNode
+            # setting prevNode to the current node
+            prevNode = currentNode
+            # advancing currentNode by 1
+            currentNode = currentNode.nextval
+        # prevnode now holds the Kth node and currentNode holds K+1th node if they exist
+        # check if k nodes are present or not
+        if count != k:
+            print("K nodes not present\n")
+            print("Please enter valid K\n")
+            self.listprint()
+            return
+        # if currentNode is None then
+        # the node to be deleted is the last node
+        # hence call deleteAtEnd method
+        if currentNode == None:
+            self.deleteAtEnding()
+        else:
+            if(prev2Node == None):
+                self.deleteAtBeginning()
+                return
+            # the node we need to delete is
+            # is in prevNode
+            # storing the node links in a var
+            nodeLinks = prevNode.nextval
+            # setting (K-1)th node to point to the (K+1)th node
+            prev2Node.nextval = nodeLinks
+
+            # deleting the node
+            del(prevNode)
+
 if __name__=="__main__":
     try:
         list1 = SLinkedList()
@@ -141,9 +190,17 @@ if __name__=="__main__":
         num = int(input("Enter num\n"))
         list1.insertAtEnd(num)
         list1.listprint()
-        list1.deleteAtBeginning()
+        k = int(input("Enter Kth pos to delete: \n"))
+        list1.deleteKthNode(k)
         list1.listprint()
-        list1.deleteAtEnding()
+        k = int(input("Enter Kth pos to delete: \n"))
+        list1.deleteKthNode(k)
+        list1.listprint()
+        k = int(input("Enter Kth pos to delete: \n"))
+        list1.deleteKthNode(k)
+        list1.listprint()
+        k = int(input("Enter Kth pos to delete: \n"))
+        list1.deleteKthNode(k)
         list1.listprint()
 
     except ValueError as e:
