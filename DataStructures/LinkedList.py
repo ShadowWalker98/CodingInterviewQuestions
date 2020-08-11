@@ -130,6 +130,7 @@ class SLinkedList:
 
 
     def deleteKthNode(self, k):
+
         # to do this we first need to check if there are k nodes
         # we try to traverse to the kth node
         count = 0
@@ -175,6 +176,33 @@ class SLinkedList:
             # deleting the node
             del(prevNode)
 
+    def countKthNode(self ,node, k):
+        # if node is null
+        if node == None:
+            # the linked list is empty
+            print("No linked list")
+            return -1
+        if node.nextval == None:
+            # this is the last node in the linked list
+            return 1
+        else:
+            # adding the count returned by the function and adding 1
+            # to include the current node as well
+            c = 1 + self.countKthNode(node.nextval, k)
+            # if the current count is equal
+            # to the required value, print the value of the node
+            if c == k:
+                print("Value of the node: ", node.dataval)
+            # return the present count
+            return c
+
+
+
+
+
+
+
+
 if __name__=="__main__":
     try:
         list1 = SLinkedList()
@@ -190,22 +218,17 @@ if __name__=="__main__":
         num = int(input("Enter num\n"))
         list1.insertAtEnd(num)
         list1.listprint()
-        k = int(input("Enter Kth pos to delete: \n"))
-        list1.deleteKthNode(k)
-        list1.listprint()
-        k = int(input("Enter Kth pos to delete: \n"))
-        list1.deleteKthNode(k)
-        list1.listprint()
-        k = int(input("Enter Kth pos to delete: \n"))
-        list1.deleteKthNode(k)
-        list1.listprint()
-        k = int(input("Enter Kth pos to delete: \n"))
-        list1.deleteKthNode(k)
+        list1.countKthNode(list1.headval, 2)
         list1.listprint()
 
     except ValueError as e:
         print("Enter a valid number!")
         print(e)
+
+
+
+
+
 
 
 
