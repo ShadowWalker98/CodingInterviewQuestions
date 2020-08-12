@@ -197,6 +197,45 @@ class SLinkedList:
             return c
 
 
+def mergeTwoSortedLinkedLists(headOne, headTwo):
+    # headOne is the headval of the first linked list
+    # headTwo is the headval of the second linked list
+    mergedLL = SLinkedList()
+    nodeptr1 = headOne
+    nodeptr2 = headTwo
+    # check if both are None or not
+    while nodeptr1 != None and nodeptr2 != None:
+        # compare the two values in the present node
+        if nodeptr1.dataval >= nodeptr2.dataval:
+            # if the second ll has less value we have to insert it into the new linked list
+            # so we call insert at end
+            mergedLL.insertAtEnd(nodeptr2.dataval)
+            # advance to the next node in the second ll
+            nodeptr2 = nodeptr2.nextval
+        else:
+            # if the first node has less data then call insert at end and
+            # insert the first lls value
+            mergedLL.insertAtEnd(nodeptr1.dataval)
+            # advance to the next node in the first ll
+            nodeptr1 = nodeptr1.nextval
+    # check if there are any other nodes remaining in
+    # the other linked lists
+    while nodeptr1 != None:
+        # if it isnt empty, add each node
+        mergedLL.insertAtEnd(nodeptr1.dataval)
+        # advance the pointer
+        nodeptr1 = nodeptr1.nextval
+
+    while nodeptr2 != None:
+        # repeat the same for the second
+        # linked list
+        mergedLL.insertAtEnd(nodeptr2.dataval)
+        nodeptr2 = nodeptr2.nextval
+    # return the merged Linked list
+    return mergedLL
+
+
+
 
 
 
@@ -206,20 +245,40 @@ class SLinkedList:
 if __name__=="__main__":
     try:
         list1 = SLinkedList()
-        num = int(input("Enter num\n"))
-        list1.insertAtBeginning(num)
+        list2 = SLinkedList()
+        list1.insertAtEnd(2)
+        list1.insertAtEnd(4)
+        list1.insertAtEnd(6)
+        list1.insertAtEnd(9)
+        list1.insertAtEnd(11)
+        list1.insertAtEnd(15)
+        list2.insertAtEnd(3)
+        list2.insertAtEnd(7)
+        list2.insertAtEnd(8)
+        list2.insertAtEnd(10)
+        list2.insertAtEnd(12)
+        list2.insertAtEnd(17)
+        list2.insertAtEnd(21)
         list1.listprint()
-        num = int(input("Enter num\n"))
-        list1.insertAtBeginning(num)
-        list1.listprint()
-        num = int(input("Enter num\n"))
-        list1.insertAtEnd(num)
-        list1.listprint()
-        num = int(input("Enter num\n"))
-        list1.insertAtEnd(num)
-        list1.listprint()
-        list1.countKthNode(list1.headval, 2)
-        list1.listprint()
+        list2.listprint()
+        mLL = mergeTwoSortedLinkedLists(list1.headval, list2.headval)
+        mLL.listprint()
+
+        # num = int(input("Enter num\n"))
+        # list1.insertAtBeginning(num)
+        # list1.listprint()
+        # num = int(input("Enter num\n"))
+        # list1.insertAtBeginning(num)
+        # list1.listprint()
+        # num = int(input("Enter num\n"))
+        # list1.insertAtEnd(num)
+        # list1.listprint()
+        # num = int(input("Enter num\n"))
+        # list1.insertAtEnd(num)
+        # list1.listprint()
+        # list1.countKthNode(list1.headval, 2)
+        # list1.listprint()
+
 
     except ValueError as e:
         print("Enter a valid number!")
